@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Team UI</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_account_name">Name</string>
+    <string name="placeholder_account_amount">100.00</string>
+    <string name="placeholder_account_iban">FR1234567890AB12345678</string>
+    <string name="placeholder_account_currency">$</string>
+
+    <!-- Description -->
+    <string name="description_floating_refresh">Refresh Account</string>
+
 </resources>
