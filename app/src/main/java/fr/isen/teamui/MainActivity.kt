@@ -1,15 +1,17 @@
 package fr.isen.teamui
 
-import android.hardware.biometrics.BiometricManager.Authenticators.*
+import android.app.KeyguardManager
+import android.content.Intent
 import android.os.Build
-import androidx.biometric.BiometricPrompt
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import java.util.concurrent.Executor
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var executor: Executor
@@ -41,6 +43,8 @@ class MainActivity : AppCompatActivity() {
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
+                    val intent = Intent(applicationContext, AccountsActivity::class.java)
+                    startActivity(intent)
                     Toast.makeText(
                         applicationContext,
                         "Authentication succeeded!", Toast.LENGTH_SHORT
@@ -58,17 +62,25 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric login for my app")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
-            .build()
+        fingerPrint()
+    }
 
-        // Prompt appears when user clicks "Log in".
-        // Consider integrating with the keystore to unlock cryptographic operations,
-        // if needed by your app.
-        biometricPrompt.authenticate(promptInfo)
+    fun onClickBtn(v: View?) {
+        fingerPrint()
+    }
+    fun fingerPrint(){
+        val keyguardManager = getSystemService(KeyguardManager::class.java)
+        if(keyguardManager.isDeviceSecure()){
+            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for my app")
+                .setSubtitle("Log in using your biometric credential")
+                .setDeviceCredentialAllowed(true)
+                .build()
 
-
+            // Prompt appears when user clicks "Log in".
+            // Consider integrating with the keystore to unlock cryptographic operations,
+            // if needed by your app.
+            biometricPrompt.authenticate(promptInfo)
+        }
     }
 }
