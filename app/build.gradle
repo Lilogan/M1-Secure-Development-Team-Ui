@@ -4,6 +4,10 @@ plugins {
     id 'kotlin-kapt'
 }
 
+apply plugin: 'com.chrisney.enigma'
+enigma.enabled = true
+enigma.injectFakeKeys = true
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -20,7 +24,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -61,3 +65,4 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+
