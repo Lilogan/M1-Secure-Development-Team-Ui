@@ -8,23 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fr.isen.teamui.adapter.AccountsAdapter
-import fr.isen.teamui.api.Services
+import fr.isen.teamui.api.AccountServices
+import fr.isen.teamui.api.ApiHelper
 import fr.isen.teamui.database.TeamuiDatabase
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class AccountsActivity : AppCompatActivity() {
     private val mainScope = MainScope()
     private val database by lazy { TeamuiDatabase.getDatabase(this) }
-    private val service by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://6007f1a4309f8b0017ee5022.mockapi.io/api/m1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(Services::class.java)
+    private val accountServices by lazy {
+        ApiHelper.getInstance().create(AccountServices::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +47,7 @@ class AccountsActivity : AppCompatActivity() {
     private fun updateAccounts() {
         mainScope.launch {
             try {
-                val accounts = service.getAccounts()
+                val accounts = accountServices.getAccounts()
                 database.teamuiDao().updateAccounts(accounts)
                 Toast.makeText(applicationContext, "Account updated !", Toast.LENGTH_SHORT).show()
             } catch (exception: Exception) {

@@ -68,9 +68,10 @@ class MainActivity : AppCompatActivity() {
     fun onClickBtn(v: View?) {
         fingerPrint()
     }
-    fun fingerPrint(){
+
+    private fun fingerPrint() {
         val keyguardManager = getSystemService(KeyguardManager::class.java)
-        if(keyguardManager.isDeviceSecure()){
+        if (keyguardManager.isDeviceSecure) {
             promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
