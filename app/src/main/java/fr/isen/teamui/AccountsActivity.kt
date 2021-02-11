@@ -1,7 +1,6 @@
 package fr.isen.teamui
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +16,12 @@ import kotlinx.coroutines.launch
 
 class AccountsActivity : AppCompatActivity() {
     private val mainScope = MainScope()
+
     private val database by lazy { TeamuiDatabase.getDatabase(this) }
     private val accountServices by lazy {
         ApiHelper.getInstance().create(AccountServices::class.java)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,6 @@ class AccountsActivity : AppCompatActivity() {
                 database.teamuiDao().updateAccounts(accounts)
                 Toast.makeText(applicationContext, "Account updated !", Toast.LENGTH_SHORT).show()
             } catch (exception: Exception) {
-                exception.message?.let { Log.v("Testing", it) }
                 Toast.makeText(applicationContext, "No Internet connection", Toast.LENGTH_LONG)
                     .show()
             }
