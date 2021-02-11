@@ -15,8 +15,8 @@ To hide the APi url, we stored it in a compiled c++ file which is after obfuscat
 
 ## Screenshots
 
-!(/images/fingerprint.png)
+![fingerprint page image](/images/fingerprint.png)
 
-!(/images/code.png)
+![code page image](/images/code.png)
 
-!(/images/main.png)
+![main page image](/images/main.png)
